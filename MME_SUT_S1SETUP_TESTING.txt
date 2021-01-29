@@ -1,0 +1,36 @@
+module MME_SUT_X2SETUP_TESTING
+{
+	import from ENB_TS_CONFIG all;
+	import from X2AP_Templates all;
+
+	testcase MME_X2SETUP_TEST001() runs on ENB_TS
+	{
+		X2APP.send(X2AP_X2SETUP_Request_Sending_To_SUT_T1);
+		T1.start;
+
+		alt
+		{
+			[]X2APP.receive(X2AP_X2SETUP_Response_Receiving_From_SUT_T1)
+			{
+				T1.stop;
+				setverdict(pass);
+			}
+			[]X2APP.receive
+			{
+				T1.stop;
+				setverdict(fail);
+			}
+			[]T1.timeout
+			{
+				setverdict(inconc);
+			}
+		}
+		stop;
+	}
+
+	control
+	{
+		execute(MME_X2SETUP_TEST001());
+	}
+	
+}

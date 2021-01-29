@@ -1,0 +1,124 @@
+module X2AP_Templates
+{
+	import from X2AP_CommonDataTypes language "ASN.1:1997" all;
+	import from X2AP_Constants language "ASN.1:1997" all;	
+	import from X2AP_Containers language "ASN.1:1997" all;
+	import from X2AP_IEs language "ASN.1:1997" all;	
+	import from X2AP_PDU_Contents language "ASN.1:1997" all;
+	import from X2AP_PDU_Descriptions language "ASN.1:1997" all;
+	
+	template X2AP_PDU X2AP_X2SETUP_Request_Sending_To_SUT_T1 :=
+	{
+		initiatingMessage :=
+		{
+			procedureCode := id_X2Setup,
+ 			criticality	:= reject,
+ 			value_ := 
+			{
+				X2SetupRequest:=
+				{
+					protocolIEs:= 
+					{
+						{
+							id := id_Global_ENB_ID,
+ 							criticality := reject,
+							value_ :=
+							{
+								pLMNidentity := '404071'O,
+								eNB_ID :=
+								{
+									macroENB_ID := '00000000000000002222'B
+								},
+								iE_Extensions := omit	
+							}	
+						},
+ 						{
+							id := id_eNBname,
+ 							criticality := ignore,
+							value_ :="AIRTEL ENB"
+						},
+						{
+							id := id_SupportedTAs,
+ 							criticality := reject,
+							value_ :=
+							{
+								{
+									tAC := '0001'O,
+ 									broadcastPLMNs := 
+									{
+										'404071'O
+									},
+									iE_Extensions := omit	
+								},
+								{
+									tAC := '0002'O,
+ 									broadcastPLMNs := 
+									{
+										'404071'O
+									},
+									iE_Extensions := omit
+								}
+							}
+						},
+						{
+							id := id_DefaultPagingDRX,
+ 							criticality := ignore,
+							value_ := v256
+						}
+					}
+				} 
+			}			
+		}	
+	}
+	
+	template X2AP_PDU X2AP_X2SETUP_Response_Receiving_From_SUT_T1 :=
+	{
+		successfulOutcome :=
+		{
+			procedureCode := id_X2Setup,
+ 			criticality	:= reject,
+ 			value_ :=
+			{
+				X2SetupResponse:=
+				{
+					protocolIEs:=
+					{
+						{
+							id := id_MMEname,
+ 							criticality := ignore,
+							value_ := "AIRTEL MME"
+						},
+ 						{
+							id := id_ServedGUMMEIs,
+ 							criticality := reject,
+							value_ :=
+							{
+								{
+									servedPLMNs:= 
+									{
+										'404071'O
+									},
+ 									servedGroupIDs := 
+									{
+										'0001'O
+									},
+									servedMMECs := 
+									{
+										'01'O
+									},
+									iE_Extensions := *	
+								}
+							}
+						},
+						{
+							id := id_RelativeMMECapacity,
+ 							criticality := ignore,
+							value_ := 255
+						}
+					} 
+				} 
+			}	 			
+		}	 
+	
+	}			
+}

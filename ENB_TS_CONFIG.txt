@@ -1,0 +1,15 @@
+module ENB_TS_CONFIG
+{
+	import from X2AP_PDU_Descriptions language "ASN.1:1997" all;
+	
+	type port X2APPort message
+	{
+		inout X2AP_PDU;
+	}
+	
+	type component ENB_TS 
+	{
+		port X2APPort X2APP;
+		timer T1 := 5.0;
+	} 
+}
